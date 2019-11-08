@@ -1,0 +1,19 @@
+
+<!-- <div class="card product-card">
+        <div class="card-body">
+                <h5 class="card-title">{{product.productname}}</h5>
+                <img src="data:image/png;base64,{{product.productimage}}" class="img-responsive" height="150px"
+                        width="200px" alt="No iamge" onerror="this.src='assets/img/login.jpg';">
+                  
+                <p class="card-text "> {{product.description}}</p>
+                <button class="btn btn-primary addTocart" style="text-align: right" (click)="addToCart()">Add to Cart</button>
+        </div>
+</div> -->
+
+<div class="card">
+        <img src="jeans3.jpg" alt="Denim Jeans" style="width:100%" onerror="this.src='assets/img/login.jpg';">
+        <h1>{{product.productname}}</h1>
+        <p class="price">${{product.price}}</p>
+        <p>{{product.description}}</p>
+        <p><button (click)="addToCart()">Add to Cart</button></p>
+      </div>

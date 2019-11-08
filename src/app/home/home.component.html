@@ -1,0 +1,8 @@
+<div class="container">
+        <br>
+        <div class="row">
+          <div class="col-sm-12 col-md-6 col-lg-3 align-left" *ngFor="let product of products">
+            <app-product [product]="product" (productAddToCart)="addToCart($event)">Loading...</app-product>
+          </div>
+        </div>
+      </div>
