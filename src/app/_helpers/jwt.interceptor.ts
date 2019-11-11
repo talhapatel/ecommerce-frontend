@@ -5,30 +5,35 @@ import { Observable } from 'rxjs';
 import { NotifyService } from '../common/notify.service';
 import { tap, finalize, catchError, delay } from 'rxjs/operators';
 import { LoadingService } from '../common/loader.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
     private requests: HttpRequest<any>[] = [];
     constructor(private authenticationService: AuthenticationService,private notify:NotifyService,private loading:LoadingService) { }
     private totalRequests = 0;
+    
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // add auth header with jwt if user is logged in and request is to api url
+        var reqUrl = request.url;
+        let url = environment.API_ENDPOINT + reqUrl
         this.totalRequests++;
     this.loading.show();
      //   this.loading.isLoading.next(true);
-        const currentUser = this.authenticationService.currentUserValue;
+     //   const currentUser = this.authenticationService.currentUserValue;
         const token=localStorage.getItem("token");
-        const isLoggedIn = currentUser && currentUser.token;
+     //   const isLoggedIn = currentUser && currentUser.token;
        
       //  const isApiUrl = request.url.startsWith(config.apiUrl);
-        if (token) {
+      //  if (token) {
             console.log("token",token)
             request = request.clone({
+              url: url,
                 setHeaders: {
                     Authorization: `Bearer ${token}`
                 }
             });
-        }
+    //    }
         return next.handle(request).pipe(
             
             tap(resp=>{

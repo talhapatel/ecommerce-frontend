@@ -10,14 +10,14 @@ import { Router } from '@angular/router';
 })
 export class NavComponent implements OnInit {
 
-  constructor(private _apiService:ApiService,private _authService:AuthenticationService,private _route:Router) { }
+  constructor(private _apiService:ApiService,private _authService:AuthenticationService,private router:Router) { }
 
   ngOnInit() {
   }
 logout()
 {
   this._authService.logout();
-  this._route.navigate(['']);
+  this.router.navigate(['/login']);
 
 }
 }

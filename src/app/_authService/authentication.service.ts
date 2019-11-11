@@ -13,16 +13,13 @@ export class AuthenticationService{
     private currentUserSubject: BehaviorSubject<any>;
     public currentUser: Observable<any>;
     constructor(private http: HttpClient, private _router: Router, private _route: ActivatedRoute){
-        this.currentUserSubject = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('currentUser')));
-        this.currentUser = this.currentUserSubject.asObservable();
+      
 
     }
-    public get currentUserValue(): any {
-        return this.currentUserSubject.value;
-    }
+ 
     //POST /api/auth/signin
     login(username: string, password: string) {
-        return this.http.post<any>('http://localhost:8080/api/auth/signin', { username: username, password: password })
+        return this.http.post<any>('auth/signin', { username: username, password: password })
            
     }
 
@@ -30,6 +27,6 @@ export class AuthenticationService{
         // remove user from local storage to log user out
         localStorage.removeItem('token');
         localStorage.removeItem('currentuser');
-        this.currentUserSubject.next(null);
+       
     }
 }
