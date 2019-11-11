@@ -3,26 +3,18 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse } fr
 import { AuthenticationService } from '../_authService/authentication.service';
 import { Observable } from 'rxjs';
 import { NotifyService } from '../common/notify.service';
-import { tap, finalize } from 'rxjs/operators';
+import { tap, finalize, catchError, delay } from 'rxjs/operators';
 import { LoadingService } from '../common/loader.service';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
     private requests: HttpRequest<any>[] = [];
     constructor(private authenticationService: AuthenticationService,private notify:NotifyService,private loading:LoadingService) { }
-
-
-    removeRequest(request: HttpRequest<any>) {
-        const i = this.requests.indexOf(request);
-        if (i >= 0) {
-            this.requests.splice(i, 1);
-        }
-        this.loading.isLoading.next(this.requests.length > 0);
-    }
+    private totalRequests = 0;
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // add auth header with jwt if user is logged in and request is to api url
-        this.requests.push(request);
-        this.loading.show()
+        this.totalRequests++;
+    this.loading.show();
      //   this.loading.isLoading.next(true);
         const currentUser = this.authenticationService.currentUserValue;
         const token=localStorage.getItem("token");
@@ -37,11 +29,13 @@ export class JwtInterceptor implements HttpInterceptor {
                 }
             });
         }
-        return next.handle(request).pipe(tap(resp=>{
+        return next.handle(request).pipe(
+            
+            tap(resp=>{
             if (resp instanceof HttpResponse) {  
             var res = resp.body
             console.log(res.status,"interceptor")
-       
+            this.decreaseRequests();
             if (res.messages && res.messages[0]) {
                 if (res.status == 'FAILURE') {
                   //  this.removeRequest(request);
@@ -65,11 +59,21 @@ export class JwtInterceptor implements HttpInterceptor {
               //  subscription.unsubscribe();
             }
            // this.removeRequest(request);
-            finalize(() =>{
-            console.log("in finalize")
-             this.loading.hide()
-            })
+        
             
-        })) 
+        }),
+        
+        catchError(err => {
+            this.decreaseRequests();
+            throw err;
+          })
+        ) 
     }
+
+    private decreaseRequests() {
+        this.totalRequests--;
+        if (this.totalRequests === 0) {
+          this.loading.hide()
+        }
+      }
 }

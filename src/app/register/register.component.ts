@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../api-service.service';
 import { Router } from '@angular/router';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { RegisterService } from './register.service';
 
 @Component({
   selector: 'app-register',
@@ -10,9 +11,9 @@ import { FormBuilder } from '@angular/forms';
 })
 export class RegisterComponent implements OnInit {
 
-  private registrationForm:any;
+  public registrationForm:FormGroup;
 
-  constructor(private _apiService:ApiService,private _router:Router,private _formBuilder:FormBuilder) { }
+  constructor(private _apiService:ApiService,private _router:Router,private _formBuilder:FormBuilder,private _registerService:RegisterService) { }
 
   ngOnInit() {
 
@@ -20,11 +21,26 @@ export class RegisterComponent implements OnInit {
   }
   createForm(){
 
-    this.registrationForm=this._formBuilder.group(
+    this.registrationForm =this._formBuilder.group(
       {
         
+  email: ['',Validators.required],
+  name: [''],
+  password: ['',Validators.required],
+  
+  username: ['',Validators.required]
       }
     )
+  }
+
+  register(values){
+    values.role=['user']
+    console.log("values",values)
+    localStorage.clear();
+    this._registerService.addUser(values).subscribe(s=>{
+      console.log(s);
+    })
+
   }
 
 }

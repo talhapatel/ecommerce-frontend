@@ -15,20 +15,24 @@ export class LoginComponent implements OnInit {
   submitted = false;
   returnUrl: string;
   error = '';
+ 
 
   constructor(
       private formBuilder: FormBuilder,
       private route: ActivatedRoute,
       private router: Router,
       private authenticationService: AuthenticationService
-  ) { }
+  ) {
+   
+   }
 
   ngOnInit() {
       this.loginForm = this.formBuilder.group({
           username: ['', Validators.required],
           password: ['', Validators.required]
-      });
 
+      });
+ 
       // reset login status
       this.authenticationService.logout();
 
@@ -57,7 +61,7 @@ export class LoginComponent implements OnInit {
                  localStorage.setItem('token', res.data.token);
                  localStorage.setItem('currentuser', JSON.stringify({ user: res.data.user }));
                   this.router.navigate(['/home']);
-                  
+                  console.log('current user',res.data.user)
                 }else {
                   this.error = res.messages[0].message;
                   this.loading = false;

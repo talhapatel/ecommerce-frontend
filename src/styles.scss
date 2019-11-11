@@ -1,17 +1,2 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.css";
-.waiting-loader .ui-dialog{
-    background: transparent;
-    border: none;
-    -webkit-box-shadow: none;
-}
-
-.waiting-loader .ui-shadow{
-    box-shadow: transparent
-}
-
-.waiting-loader .ui-dialog .ui-dialog-content{
-    overflow: hidden !important;
-    background: no-repeat;
-    border: none;
-}

@@ -14,4 +14,7 @@ export class ApiService {
 return this.http.get('http://localhost:8080/getProductList');
     
   }
+  currentUser(){
+    return JSON.parse(localStorage.getItem('currentuser'));
+  }
 }

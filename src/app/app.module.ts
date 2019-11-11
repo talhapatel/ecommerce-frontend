@@ -23,6 +23,7 @@ import {DialogModule} from 'primeng/dialog';
 import { ProductComponent } from './home/product/product.component';
 import { CartItemComponent } from './home/cart-item/cart-item.component';
 import { AddressComponent } from './home/address/address.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +34,7 @@ import { AddressComponent } from './home/address/address.component';
     ProductComponent,
     CartItemComponent,
     AddressComponent,
+   
     
   ],
   imports: [
