@@ -22,6 +22,7 @@ export class JwtInterceptor implements HttpInterceptor {
      //   this.loading.isLoading.next(true);
      //   const currentUser = this.authenticationService.currentUserValue;
         const token=localStorage.getItem("token");
+        
      //   const isLoggedIn = currentUser && currentUser.token;
        
       //  const isApiUrl = request.url.startsWith(config.apiUrl);
@@ -35,7 +36,7 @@ export class JwtInterceptor implements HttpInterceptor {
             });
     //    }
         return next.handle(request).pipe(
-            
+            delay(100),
             tap(resp=>{
             if (resp instanceof HttpResponse) {  
             var res = resp.body

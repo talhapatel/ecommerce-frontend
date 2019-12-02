@@ -3,6 +3,7 @@ import { Message, MessageService } from 'primeng/api';
 import { Subscription, Subject } from 'rxjs';
 import { NotifyService } from './common/notify.service';
 import { LoadingService } from './common/loader.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,7 @@ export class AppComponent {
   msgs: Message[] = [];
   subscription: Subscription;
   isLoading: Subject<boolean> = this.loadingService.isLoading
-constructor( private _messageService: MessageService,  private _notifyService: NotifyService,private loadingService:LoadingService){
+constructor( private _messageService: MessageService,  private _notifyService: NotifyService,private loadingService:LoadingService,private _route:Router){
 
   this.subscription = _notifyService.successResponse$.subscribe(
     msg => {
@@ -26,6 +27,10 @@ constructor( private _messageService: MessageService,  private _notifyService: N
       this.messageAlert("error", msg);
     });
 
+    var token=localStorage.getItem('token');
+    if(token){
+      this._route.navigate(['home']);
+    }
 /*     this.loadingService.isLoading.subscribe((v) => {
       console.log(v);
       this.loading = v;
