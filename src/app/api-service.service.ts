@@ -16,7 +16,7 @@ return this.http.get('getProductList');
   }
   
   addToCart(product,email){
-    return this.http.post(`addToCart?email=${email}&prodId=${product}`,'');
+    return this.http.post<any>(`addToCart?email=${email}&prodId=${product}`,'');
   }
   currentUser(){
     return JSON.parse(localStorage.getItem('currentuser'));
@@ -27,5 +27,9 @@ return this.http.get('getProductList');
   }
   updateCart(bufcartid,qty,email){
     return this.http.put(`updateCart?bufcartid=${bufcartid}&qty=${qty}&email=${email}`,'')
+  }
+
+  getCartCount(email){
+    return this.http.get<any>(`viewCartBadge?email=${email}`);
   }
 }

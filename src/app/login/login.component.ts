@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '../_authService/authentication.service';
 import { first } from 'rxjs/operators';
+import { NavService } from '../nav/nav.service';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,8 @@ export class LoginComponent implements OnInit {
       private formBuilder: FormBuilder,
       private route: ActivatedRoute,
       private router: Router,
-      private authenticationService: AuthenticationService
+      private authenticationService: AuthenticationService,
+      private navService:NavService
   ) {
    
    }
@@ -62,6 +64,8 @@ export class LoginComponent implements OnInit {
                  localStorage.setItem('currentuser', JSON.stringify({ user: res.data.user }));
                   this.router.navigate(['/home']);
                   console.log('current user',res.data.user)
+
+                  this.navService.setLogin(true);
                 }else {
                   this.error = res.messages[0].message;
                   this.loading = false;

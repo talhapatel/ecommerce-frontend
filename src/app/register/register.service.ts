@@ -12,7 +12,7 @@ export class RegisterService {
 
 addUser(user):Observable<any>{
  
-  return this.http.post("http://localhost:8080/api/auth/signup",user);
+  return this.http.post("auth/signup",user);
 }
 
 }

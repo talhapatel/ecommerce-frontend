@@ -24,10 +24,21 @@
           </li> -->
       </ul>
       <span class="navbar-text">
-        <a class="nav-link" routerLink="/viewCart">Cart</a>
+          <span class="badge badge-light" *ngIf="badge">{{badge}}</span>
+        <a class="nav-link" routerLink="/viewCart">  <i class="pi pi-shopping-cart" style="font-size: 2em"></i></a>
+           
+          
+    
   </span>
-      <span class="navbar-text" >
+  <span class="navbar-text" >
+      <span class="badge badge-dark" >{{user?.user?.name}}</span>
+    
+  </span>
+      <span class="navbar-text" *ngIf="currentUser" >
           <a class="nav-link" (click)="logout()">Logout</a>
       </span>
+      <span class="navbar-text" *ngIf="!currentUser" >
+        <a class="nav-link" [routerLink]="">log In</a>
+    </span>
     </div>
   </nav>

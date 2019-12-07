@@ -20,11 +20,7 @@ export class ProductComponent implements OnInit {
   addToCart() {
 
     this.productAddToCart.emit(this.product);
-    console.log("product",this.product)
-    var user=this.api.currentUser();
-this.api.addToCart(this.product.productid,user.user.email).subscribe(c=>{
-console.log("add successfully")
-});
-    console.log(user.user.email,"user");
+
+ //   console.log(user.user.email,"user");
   }
 }
