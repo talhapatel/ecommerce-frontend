@@ -32,4 +32,8 @@ return this.http.get('getProductList');
   getCartCount(email){
     return this.http.get<any>(`viewCartBadge?email=${email}`);
   }
+
+  getActiveUser(){
+    return this.http.get<any>('auth/getUserList');
+  }
 }

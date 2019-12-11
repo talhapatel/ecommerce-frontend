@@ -2,29 +2,34 @@
         <h2>Active User List</h2>
          <table class="table">
           <thead>
-         <!--    <tr *ngFor="let col in col">
-              <th>Firstname</th>
-              <th>Lastname</th>
-              <th>Email</th>
-            </tr> -->
+        <tr >
+              <th>name</th>
+              <th>EMAIL</th>
+              <th>ROLES</th>
+            </tr> 
           </thead>
           <tbody>
-            <tr>
+            <tr *ngFor="let user of userList">
+              <td >{{user?.name}}</td>
+              <td >{{user?.email}}</td>
+              <td >{{user?.roles[0]?.name}}</td>
+            </tr>
+        <!--     <tr>
               <td>Default</td>
               <td>Defaultson</td>
               <td>def@somemail.com</td>
-            </tr>      
-            <tr class="success">
+            </tr>   -->    
+      <!--       <tr class="success">
               <td>Success</td>
               <td>Doe</td>
               <td>john@example.com</td>
-            </tr>
-            <tr class="danger">
+            </tr> -->
+       <!--      <tr class="danger">
               <td>Danger</td>
               <td>Moe</td>
               <td>mary@example.com</td>
-            </tr>
-            <tr class="info">
+            </tr> -->
+     <!--        <tr class="info">
               <td>Info</td>
               <td>Dooley</td>
               <td>july@example.com</td>
@@ -38,7 +43,7 @@
               <td>Active</td>
               <td>Activeson</td>
               <td>act@example.com</td>
-            </tr>
+            </tr> -->
           </tbody>
         </table>
       </div>
