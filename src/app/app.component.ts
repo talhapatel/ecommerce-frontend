@@ -5,6 +5,7 @@ import { NotifyService } from './common/notify.service';
 import { LoadingService } from './common/loader.service';
 import { Router } from '@angular/router';
 import { NavService } from './nav/nav.service';
+import { ApiService } from './api-service.service';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,9 @@ export class AppComponent implements OnInit{
   msgs: Message[] = [];
   subscription: Subscription;
   isLoading: Subject<Boolean>;
-  constructor( private _messageService: MessageService,  private _notifyService: NotifyService,private loadingService:LoadingService,private _route:Router,private navService:NavService){
+  user:any;
+  loggedType:any;
+  constructor( private _messageService: MessageService,  private _notifyService: NotifyService,private loadingService:LoadingService,private _route:Router,private navService:NavService,private _apiService:ApiService){
     this.subscription = _notifyService.successResponse$.subscribe(
       msg => {
         this.messageAlert("success", msg);
@@ -29,8 +32,21 @@ export class AppComponent implements OnInit{
         
         var token=localStorage.getItem('token');
         if(token){
+          this.user=this._apiService.currentUser();
+          this.loggedType=this.user.user.roles[0].name;
+          this.navService.setLoginType(this.loggedType);
+          console.log("loggedType",this.loggedType)
           this.navService.setLogin(true);
-          this._route.navigate(['home']);
+          if(this.loggedType=='ROLE_USER'){
+            this._route.navigate(['home']);}
+            else if(this.loggedType=='ROLE_ADMIN'){
+              this._route.navigate(['admin']);
+            }else{
+              this._route.navigate(['']);
+            }
+        }
+        else{
+          this._route.navigate(['']);
         }
         /*     this.loadingService.isLoading.subscribe((v) => {
           console.log(v);

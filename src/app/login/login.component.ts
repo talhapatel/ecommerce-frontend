@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '../_authService/authentication.service';
 import { first } from 'rxjs/operators';
 import { NavService } from '../nav/nav.service';
+import { ApiService } from '../api-service.service';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +16,9 @@ export class LoginComponent implements OnInit {
   loading = false;
   submitted = false;
   returnUrl: string;
+  loggedType:string;
+  user:any;
+
   error = '';
  
 
@@ -23,7 +27,8 @@ export class LoginComponent implements OnInit {
       private route: ActivatedRoute,
       private router: Router,
       private authenticationService: AuthenticationService,
-      private navService:NavService
+      private navService:NavService,
+      private _apiService:ApiService
   ) {
    
    }
@@ -62,7 +67,19 @@ export class LoginComponent implements OnInit {
                  // store username and jwt token in local storage to keep user logged in between page refreshes
                  localStorage.setItem('token', res.data.token);
                  localStorage.setItem('currentuser', JSON.stringify({ user: res.data.user }));
-                  this.router.navigate(['/home']);
+                 this.user=this._apiService.currentUser();
+                 this.loggedType=this.user.user.roles[0].name;
+                 this.navService.setLoginType(this.loggedType);
+                 console.log("loggedType",this.loggedType)
+                 this.navService.setLogin(true);
+                 if(this.loggedType=='ROLE_USER'){
+                   this.router.navigate(['home']);}
+                   else if(this.loggedType=='ROLE_ADMIN'){
+                     this.router.navigate(['admin']);
+                   }else{
+                     this.router.navigate(['']);
+                   }
+               
                   console.log('current user',res.data.user)
 
                   this.navService.setLogin(true);

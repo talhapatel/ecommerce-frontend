@@ -16,16 +16,22 @@ export class NavComponent implements OnInit {
 badge:number;
   badgeCountsubscription: Subscription;
   user:any;
+  loggedType:string;
   constructor(private _apiService:ApiService,private _authService:AuthenticationService,private router:Router,private navService:NavService) { 
     this.navService.cartBadge$.subscribe(s=>{
       this.badge=s;
       console.log(s,"nav");
     })
+    this.user=this._apiService.currentUser();
+   
   }
 
   ngOnInit() {
   
-    this.user=this._apiService.currentUser();
+    this.navService.loginType$.subscribe(s=>{
+      this.loggedType=s;
+      console.log(this.loggedType,"nav");
+    })
     console.log("current user",this.user)
     setTimeout(() => {
       this.currentUser= this.navService.isLogin
@@ -37,7 +43,9 @@ logout()
 {
   this._authService.logout();
   this.navService.setcartBadge(0);
+  this.navService.setLoginType('');
   this.navService.setLogin(false);
+  
   this.router.navigate(['/login']);
 
 }

@@ -20,9 +20,17 @@ import {MenuItem, MessageService} from 'primeng/api';                 //api
 import {ToastModule} from 'primeng/toast';
 import { NotifyService } from './common/notify.service';
 import {DialogModule} from 'primeng/dialog';
+
+
+
+
+
 import { ProductComponent } from './home/product/product.component';
 import { CartItemComponent } from './home/cart-item/cart-item.component';
 import { AddressComponent } from './home/address/address.component';
+import { AddProductComponent } from './Admin/add-product/add-product.component';
+import { AdminComponent } from './Admin/admin.component';
+import { OrderComponent } from './Admin/order/order.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +42,9 @@ import { AddressComponent } from './home/address/address.component';
     ProductComponent,
     CartItemComponent,
     AddressComponent,
+    AddProductComponent,
+    AdminComponent,
+    OrderComponent,
    
     
   ],
@@ -46,6 +57,7 @@ import { AddressComponent } from './home/address/address.component';
     HttpClientModule,
     AccordionModule,
     ToastModule,
+  
     
     
   ],

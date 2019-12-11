@@ -7,10 +7,13 @@ import { Subject } from 'rxjs';
 export class NavService {
    isLogin = new Subject<boolean>();
 
+   loginType = new Subject<string>();
+
    cartBadge= new Subject<number>();
 
  
    cartBadge$ = this.cartBadge.asObservable();
+   loginType$= this.loginType.asObservable();
   
  
  
@@ -20,6 +23,13 @@ export class NavService {
   }
   getLogin(){
     return this.isLogin.asObservable();
+  }
+ 
+  setLoginType(value){
+    this.loginType.next(value);
+  }
+  getLoginType(){
+    return this.loginType.asObservable();
   }
 
   setcartBadge(value){
