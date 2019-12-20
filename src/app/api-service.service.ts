@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http'
+import {HttpClient, HttpEvent, HttpRequest} from '@angular/common/http'
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -14,6 +14,31 @@ export class ApiService {
 return this.http.get('getProductList');
     
   }
+
+  addProduct(product){
+    return this.http.post<any>('addProduct',product);
+  }
+
+  addImage(file: File,uniqueId): Observable<HttpEvent<{}>> {
+      let formdata: FormData = new FormData();
+  
+   let extension=file.name.split('.').pop(); 
+      formdata.append('file', file);
+      formdata.append('uniqueId',uniqueId);
+   
+      const req = new HttpRequest('POST', 'files/post', formdata, {
+        reportProgress: true,
+        responseType: 'text'
+      });
+   
+      return this.http.request(req);
+    }
+
+    getImageByUniqueId(uniqueId){
+   
+      return this.http.get(`files/${uniqueId}`,{ responseType: 'blob' });
+    }
+  
   
   addToCart(product,email){
     return this.http.post<any>(`addToCart?email=${email}&prodId=${product}`,'');

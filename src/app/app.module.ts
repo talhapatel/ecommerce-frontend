@@ -31,6 +31,7 @@ import { AddressComponent } from './home/address/address.component';
 import { AddProductComponent } from './Admin/add-product/add-product.component';
 import { AdminComponent } from './Admin/admin.component';
 import { OrderComponent } from './Admin/order/order.component';
+import { SafePipe } from './common/SafePipe';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { OrderComponent } from './Admin/order/order.component';
     AddProductComponent,
     AdminComponent,
     OrderComponent,
+    SafePipe
    
     
   ],
