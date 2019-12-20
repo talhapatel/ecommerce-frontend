@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../api-service.service';
 import { NavService } from '../nav/nav.service';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home',
@@ -9,9 +10,9 @@ import { NavService } from '../nav/nav.service';
 })
 export class HomeComponent implements OnInit {
 
-  products:any[]=[];
+  products:any;
 user:any;
-  constructor(private api:ApiService,private nav:NavService) { }
+  constructor(private api:ApiService,private nav:NavService,private domSanitizer:DomSanitizer) { }
 
   ngOnInit() {
 this.user=this.api.currentUser();
@@ -27,8 +28,19 @@ this.getProduct();
 getProduct(){
 
   this.api.getProduct().subscribe(p=>{
-    console.log(p);
+  
     this.products=p.data.data
+
+    this.products.map(m=>{
+    this.api.getImageByUniqueId(m.uniqueId).subscribe(s=>{
+    //  console.log(s);
+    //  let sanitizedUrl = this.domSanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(s));
+     // console.log(sanitizedUrl.changingThisBreaksApplicationSecurity,"sanitizeurl")
+      m.imagePath= window.URL.createObjectURL(s)
+    })
+    })
+
+    console.log("products",this.products);
   })
 }
 addToCart(e) {

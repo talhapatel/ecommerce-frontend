@@ -1,1 +1,67 @@
-<p>add-product works!</p>
+
+    <section class="contact py-lg-4 py-md-4 py-sm-3 py-3" id="contact">
+        <div class="container py-lg-5 py-md-4 py-sm-4 py-3">
+            <h3 class="title text-center mb-4">Add product</h3> <br>
+    <form class="form-horizontal"  novalidate [formGroup]="productForm" (ngSubmit)="onSubmit(productForm.value)">
+    <div class="row">
+    <div class="col-6">
+      <div class="form-group">
+        <input class="col-sm-10 col-form-label" formControlName="productname" type="text" placeholder="Product Name">
+      </div> 
+      <div class="alert alert-danger" *ngIf="productForm.get('productname').hasError('required') && productForm.get('productname').touched && productForm.get('productname').value ==''" >
+       Product Name is required.
+     </div>
+      <div class="form-group">
+        <textarea class="col-sm-10 col-form-label" formControlName="description" rows="4" placeholder="Product Description"></textarea>
+      </div>  
+      <div class="alert alert-danger" *ngIf="productForm.get('description').hasError('required') && productForm.get('description').touched && productForm.get('description').value ==''" >
+        Product Description is required.
+     </div>
+     <div class="form-group">
+      <input class="col-sm-10 col-form-label" formControlName="qty" type="text" placeholder="Product Quantity">
+    </div> 
+    <div class="alert alert-danger" *ngIf="productForm.get('qty').hasError('required') && productForm.get('qty').touched && productForm.get('qty').value ==''" >
+     Product Quantity is required.
+   </div>
+   <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text">₹</span>
+    </div>
+    <input type="text" class="col-sm-8 col-form-label" formControlName="price" type="number" placeholder="Product Price">
+    <div class="input-group-append">
+      <span class="input-group-text">.00</span>
+    </div>
+  </div>
+  <!--  <div class="form-group">
+    <input class="col-sm-10 col-form-label" formControlName="prodPrice" type="text" placeholder="Product Price">
+  </div>  -->
+  <div class="alert alert-danger" *ngIf="productForm.get('price').hasError('required') && productForm.get('price').touched && productForm.get('price').value ==''" >
+   Product Price is required.
+ </div>
+     <div class="form-group">
+            <label for="uploadProductImg">Please select Image</label>
+            <input type="file" class="form-control-file" id="uploadProductImg"  accept="image/*" #image (change)="handleFileInput($event.target.files)">
+          </div>
+          <div *ngIf="currentFileUpload" class="progress">
+            <div class="progress-bar progress-bar-info progress-bar-striped"
+              role="progressbar" attr.aria-valuenow="{{progress?.percentage}}"
+              aria-valuemin="0" aria-valuemax="100"
+              [ngStyle]="{width:progress?.percentage+'%'}">
+              {{progress?.percentage}}%</div>
+          </div>
+    </div>
+    <div class="col-6" style="text-align: center;">
+      <h6 class="text-center">Product preview</h6><br>
+      <div class="form-group">
+            <img [src]="imageUrl" class="img-thumbnail" alt="Responsive image" style="width:300px;height: 300px;">
+          </div>
+        
+        </div>
+        </div>
+      <button class="btn btn-primary" type="submit" [disabled] ="!productForm.valid" >Add</button>
+      </form>
+      </div>
+      
+</section>
+
+
