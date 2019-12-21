@@ -12,7 +12,7 @@ import { OrderComponent } from './Admin/order/order.component';
 
 const routes: Routes = [
   {path:'register',component:RegisterComponent},
-  {path:'',component:LoginComponent},
+  {path:'',component:HomeComponent},
   {path:'login',component:LoginComponent},
   {path:'home',component:HomeComponent},
   {path:'home/viewCart',component:CartItemComponent},
