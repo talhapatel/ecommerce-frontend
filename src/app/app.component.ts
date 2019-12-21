@@ -1,4 +1,4 @@
-import { Component, OnInit, DoCheck } from '@angular/core';
+import { Component, OnInit, DoCheck, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { Message, MessageService } from 'primeng/api';
 import { Subscription, Subject } from 'rxjs';
 import { NotifyService } from './common/notify.service';
@@ -6,17 +6,18 @@ import { LoadingService } from './common/loader.service';
 import { Router } from '@angular/router';
 import { NavService } from './nav/nav.service';
 import { ApiService } from './api-service.service';
+import { startWith, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit,AfterViewInit,AfterViewChecked {
   title = 'ecommmorce';
   msgs: Message[] = [];
   subscription: Subscription;
-  isLoading: Subject<Boolean>;
+  isLoading: Subject<boolean>;
   user:any;
   loggedType:any;
   constructor( private _messageService: MessageService,  private _notifyService: NotifyService,private loadingService:LoadingService,private _route:Router,private navService:NavService,private _apiService:ApiService){
@@ -32,9 +33,9 @@ export class AppComponent implements OnInit{
         
         var token=localStorage.getItem('token');
         if(token){
-          this.user=this._apiService.currentUser();
+           this.user=this._apiService.currentUser();
           this.loggedType=this.user.user.roles[0].name;
-          this.navService.setLoginType(this.loggedType);
+          //this.navService.setLoginType(this.loggedType); 
           console.log("loggedType",this.loggedType)
           this.navService.setLogin(true);
           if(this.loggedType=='ROLE_USER'){
@@ -63,8 +64,30 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(){
-    setTimeout(() => {
+
+ //this.isLoading=false;
+    
+ /*    setTimeout(() => {
       this.isLoading = this.loadingService.isLoading;
-    }, 1000);
+    }, 1000); */
   }
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.loadingService.isLoading
+            .pipe(
+                startWith(null),
+                tap(() =>  this.isLoading = this.loadingService.isLoading)
+            ).subscribe();
+    });
+}
+
+ngAfterViewChecked() {
+  // viewChild is updated after the view has been checked
+  if (this.isLoading === this.loadingService.isLoading) {
+   
+  } else {
+    this.isLoading = this.loadingService.isLoading
+ 
+  }
+}
 }

@@ -10,8 +10,12 @@ import { CompileShallowModuleMetadata } from '@angular/compiler';
 })
 export class ProductComponent implements OnInit {
   @Input() public product;
+  @Input() public loggedType;
+
 
   @Output() productAddToCart: EventEmitter<any> = new EventEmitter<any>();
+  @Output() usergotoLogIn: EventEmitter<any> = new EventEmitter<any>();
+  display: boolean=false;
   constructor(private api:ApiService) { }
 
   ngOnInit() {
@@ -22,5 +26,10 @@ export class ProductComponent implements OnInit {
     this.productAddToCart.emit(this.product);
 
  //   console.log(user.user.email,"user");
+  }
+  gotoLogIn(){
+    this.usergotoLogIn.emit(true);
+    
+  
   }
 }

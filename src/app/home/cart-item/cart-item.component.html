@@ -16,7 +16,7 @@
         <td>
           {{cart.productname}}
         </td>
-        <td>{{cart.price | currency:'USD'}}</td>
+        <td>{{cart.price | currency:'INR'}}</td>
         <td>
   
           <div class="row">
@@ -31,7 +31,7 @@
           </div>
         </td>
         <td>
-          {{cart.quantity*cart.price | currency:'USD'}}
+          {{cart.quantity*cart.price | currency:'INR'}}
       
   
         </td>
@@ -42,7 +42,7 @@
     </table>
   
     <div class="row">
-      <div class="col-9">Total Sum : {{totalSum | currency:'USD'}}</div>
+      <div class="col-9">Total Sum : {{totalSum | currency:'INR'}}</div>
       <div class="offset-1 col-2"><button type="button" class="btn btn-primary align-right" (click)="place()">Checkout
            <i class="fa fa-angle-right"></i></button></div>
   

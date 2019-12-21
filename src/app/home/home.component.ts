@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../api-service.service';
 import { NavService } from '../nav/nav.service';
 import {DomSanitizer} from '@angular/platform-browser';
+import { isNullOrUndefined } from 'util';
+import { Router } from '@angular/router';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-home',
@@ -12,12 +15,21 @@ export class HomeComponent implements OnInit {
 
   products:any;
 user:any;
-  constructor(private api:ApiService,private nav:NavService,private domSanitizer:DomSanitizer) { }
+  loggedType: any="CUSTOMER";
+  display: any;
+  constructor(private api:ApiService,private nav:NavService,private domSanitizer:DomSanitizer,private navService:NavService,private rout:Router,private confirmationService: ConfirmationService) { }
 
   ngOnInit() {
+    this.getProduct();
 this.user=this.api.currentUser();
-this.getCount(this.user.user.email);
-this.getProduct();
+if(this.user){
+  this.getCount(this.user.user.email);
+  
+  this.user=this.api.currentUser();
+  this.loggedType=this.user.user.roles[0].name;
+  
+}
+this.navService.setLoginType(this.loggedType);
   }
   getCount(email){
     this.api.getCartCount(email).subscribe(s=>{ 
@@ -36,6 +48,7 @@ getProduct(){
     //  console.log(s);
     //  let sanitizedUrl = this.domSanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(s));
      // console.log(sanitizedUrl.changingThisBreaksApplicationSecurity,"sanitizeurl")
+   
       m.imagePath= window.URL.createObjectURL(s)
     })
     })
@@ -51,5 +64,23 @@ this.api.addToCart(e.productid,user.user.email).subscribe(c=>{
   this.nav.setcartBadge(c.data.count);
 console.log("add successfully")
 });
+}
+gotoLogIn(e){
+  this.confirmationService.confirm({
+      message: 'Are you sure that you want to proceed?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.rout.navigate(['/login']);
+      },
+      reject: () => {
+         
+      }
+  });
+
+
+}
+public sanitizeImage(image: string) {
+  return this.domSanitizer.bypassSecurityTrustStyle(`url(${image})`);
 }
 }
