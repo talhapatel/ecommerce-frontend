@@ -39,6 +39,7 @@ export class RegisterComponent implements OnInit {
     localStorage.clear();
     this._registerService.addUser(values).subscribe(s=>{
       console.log(s);
+      this._router.navigate(['/login']);
     })
 
   }

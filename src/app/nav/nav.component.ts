@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ApiService } from '../api-service.service';
 import { AuthenticationService } from '../_authService/authentication.service';
 import { Router } from '@angular/router';
@@ -12,41 +12,45 @@ import { Subject, Subscription } from 'rxjs';
 })
 export class NavComponent implements OnInit {
 
-  currentUser:Subject<boolean>;
+ // @Input() public loggedType:string;
+  //currentUser:Subject<boolean>;
 badge:number;
   badgeCountsubscription: Subscription;
   user:any;
-  loggedType:string;
+  loggedType: string;
+ // loggedType:string;
   constructor(private _apiService:ApiService,private _authService:AuthenticationService,private router:Router,private navService:NavService) { 
     this.navService.cartBadge$.subscribe(s=>{
       this.badge=s;
       console.log(s,"nav");
     })
     this.user=this._apiService.currentUser();
+
+    this.navService.loginType$.subscribe(s=>{
+      this.loggedType=s;
+      console.log(this.loggedType,"nav");
+    })
    
   }
 
   ngOnInit() {
   
-    this.navService.loginType$.subscribe(s=>{
-      this.loggedType=s;
-      console.log(this.loggedType,"nav");
-    })
-    console.log("current user",this.user)
+ 
+ /*    console.log("current user",this.user)
     setTimeout(() => {
       this.currentUser= this.navService.isLogin
-    }, 1000);
+    }, 1000); */
    
-  console.log(this.currentUser,"in nav bar")
+  //console.log(this.currentUser,"in nav bar")
   }
 logout()
 {
   this._authService.logout();
   this.navService.setcartBadge(0);
-  this.navService.setLoginType('');
-  this.navService.setLogin(false);
+ 
+ // this.navService.setLogin(false);
   
-  this.router.navigate(['/login']);
+  this.router.navigate(['/home']);
 
 }
 }

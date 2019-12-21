@@ -36,7 +36,7 @@ export class JwtInterceptor implements HttpInterceptor {
             });
     //    }
         return next.handle(request).pipe(
-            delay(100),
+            delay(500),
             tap(resp=>{
             if (resp instanceof HttpResponse) {  
             var res = resp.body
