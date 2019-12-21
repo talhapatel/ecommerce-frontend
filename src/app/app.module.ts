@@ -20,6 +20,8 @@ import {MenuItem, MessageService} from 'primeng/api';                 //api
 import {ToastModule} from 'primeng/toast';
 import { NotifyService } from './common/notify.service';
 import {DialogModule} from 'primeng/dialog';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ConfirmationService} from 'primeng/api';
 
 
 
@@ -59,6 +61,7 @@ import { SafePipe } from './common/SafePipe';
     HttpClientModule,
     AccordionModule,
     ToastModule,
+    ConfirmDialogModule,
   
     
     
@@ -66,7 +69,7 @@ import { SafePipe } from './common/SafePipe';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    NotifyService,MessageService
+    NotifyService,MessageService,ConfirmationService
 
   ],
   bootstrap: [AppComponent]
