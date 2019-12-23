@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ApiService } from '../api-service.service';
 import { NavService } from '../nav/nav.service';
 import {DomSanitizer} from '@angular/platform-browser';
@@ -12,11 +12,12 @@ import { ConfirmationService } from 'primeng/api';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
+ 
   products:any;
 user:any;
   loggedType: any="CUSTOMER";
   display: any;
+  keyword: any;
   constructor(private api:ApiService,private nav:NavService,private domSanitizer:DomSanitizer,private navService:NavService,private rout:Router,private confirmationService: ConfirmationService) { }
 
   ngOnInit() {
@@ -79,6 +80,37 @@ gotoLogIn(e){
   });
 
 
+}
+
+
+
+public searchInterest() {
+  let wordSearch = this.keyword;
+  setTimeout(() => {
+      if (wordSearch == this.keyword) {
+          if (this.keyword) {
+              //console.log(this.keyword)
+            this.api.searchProductByTagName(this.keyword).subscribe(p=>{
+              this.products=p.data.data
+
+              this.products.map(m=>{
+              this.api.getImageByUniqueId(m.uniqueId).subscribe(s=>{
+              //  console.log(s);
+              //  let sanitizedUrl = this.domSanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(s));
+               // console.log(sanitizedUrl.changingThisBreaksApplicationSecurity,"sanitizeurl")
+             
+                m.imagePath= window.URL.createObjectURL(s)
+              })
+              })
+            })
+
+
+          }else{
+              //code here
+              this.getProduct();
+          }
+      }
+  }, 1000);
 }
 public sanitizeImage(image: string) {
   return this.domSanitizer.bypassSecurityTrustStyle(`url(${image})`);

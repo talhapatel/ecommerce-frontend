@@ -15,6 +15,10 @@ return this.http.get('getProductList');
     
   }
 
+  searchProductByTagName(tag):Observable<any>{
+    return this.http.get(`getProductListByTags/${tag}`);
+  }
+
   addProduct(product){
     return this.http.post<any>('addProduct',product);
   }

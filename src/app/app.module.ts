@@ -22,6 +22,7 @@ import { NotifyService } from './common/notify.service';
 import {DialogModule} from 'primeng/dialog';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ConfirmationService} from 'primeng/api';
+import {ChipsModule} from 'primeng/chips';
 
 
 
@@ -62,6 +63,7 @@ import { SafePipe } from './common/SafePipe';
     AccordionModule,
     ToastModule,
     ConfirmDialogModule,
+    ChipsModule
   
     
     
