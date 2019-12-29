@@ -19,7 +19,7 @@ E-Commerce application developed for performing Admin and User role operations w
   * Placing the order
 
 * Technologies: 
-  * Angular 6
+  * Angular 8
   * Typescript
   * Spring Boot
   * Hibernate with JPA 
