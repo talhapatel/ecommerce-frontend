@@ -1,10 +1,10 @@
-<app-nav ></app-nav>
+<app-nav></app-nav>
 <div class="container-fluid">
-    <p-toast [style]="{'margin-top': '30px'}"></p-toast>
+  <p-toast [style]="{ 'margin-top': '30px' }"></p-toast>
 
-  
-   <div class="waiting-loader" *ngIf="isLoading | async " > <img src="assets/img/loader3.gif" style="width: 300px;"></div>
+  <div class="waiting-loader" *ngIf="isLoading | async">
+    <img src="assets/img/loader3.gif" style="width: 300px;" />
+  </div>
 
   <router-outlet></router-outlet>
 </div>
-

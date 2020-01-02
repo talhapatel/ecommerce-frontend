@@ -5,39 +5,39 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class NavService {
-   isLogin = new Subject<boolean>();
+  isLogin = new Subject<boolean>();
 
-   loginType = new Subject<string>();
+  loginType = new Subject<string>();
 
-   cartBadge= new Subject<number>();
+  cartBadge = new Subject<number>();
 
- 
-   cartBadge$ = this.cartBadge.asObservable();
-   loginType$= this.loginType.asObservable();
-  
- 
- 
- 
-  setLogin(value){
+
+  cartBadge$ = this.cartBadge.asObservable();
+  loginType$ = this.loginType.asObservable();
+
+
+
+
+  setLogin(value) {
     this.isLogin.next(value);
   }
-  getLogin(){
+  getLogin() {
     return this.isLogin.asObservable();
   }
- 
-  setLoginType(value){
+
+  setLoginType(value) {
     this.loginType.next(value);
   }
-  getLoginType(){
+  getLoginType() {
     return this.loginType.asObservable();
   }
 
-  setcartBadge(value){
+  setcartBadge(value) {
     this.cartBadge.next(value);
   }
-  getcartBadge(){
+  getcartBadge() {
     return this.cartBadge.asObservable();
   }
 
- 
+
 }
