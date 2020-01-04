@@ -65,4 +65,18 @@ return this.http.get('getProductList');
   getActiveUser(){
     return this.http.get<any>('auth/getUserList');
   }
+
+  getOrderList(){
+    return this.http.get<any>('orderPlace/getOrders');
+  }
+  updateOrders(order){
+    const formData: FormData = new FormData();
+    formData.append("orderId", order.orderId);
+    formData.append("orderStatus", order.orderStatus);
+    return this.http.post('orderPlace/updateOrders',formData)
+  }
+
+  placeOrder(email){
+return this.http.post(`orderPlace/placeOrder?email=${email}`,null);
+  }
 }

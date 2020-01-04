@@ -35,4 +35,12 @@ export class CartItemComponent implements OnInit {
 this.getCartList();
     })
   }
+
+  place(){
+    var user=this.api.currentUser();
+    console.log(user.user.email,"in place")
+    this.api.placeOrder(user.user.email).subscribe(res=>{
+      this.route.navigate(['/home'])
+    }) 
+  }
 }
