@@ -35,6 +35,7 @@ import { AddProductComponent } from './Admin/add-product/add-product.component';
 import { AdminComponent } from './Admin/admin.component';
 import { OrderComponent } from './Admin/order/order.component';
 import { SafePipe } from './common/SafePipe';
+import { AppPasswordDirective } from './app-password.directive';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { SafePipe } from './common/SafePipe';
     AddProductComponent,
     AdminComponent,
     OrderComponent,
-    SafePipe
+    SafePipe,
+    AppPasswordDirective
    
     
   ],
