@@ -25,7 +25,25 @@ E-Commerce application developed for performing Admin and User role operations w
   * Hibernate with JPA 
   * MySQL
   * JWT Token (Session management)
+### Admin
+----------
 
+ * Add Product
+ ![Image of screenshot](https://github.com/talhapatel/ecommerce-frontend/blob/master/screen-shot/admin-add%20%20product.png)
+ 
+ ### Custemer
+  * Registering into System
+ ![Image of screenshot](https://github.com/talhapatel/ecommerce-frontend/blob/master/screen-shot/register.png)
+ 
+  * Adding product to Cart
+   ![Image of screenshot](https://github.com/talhapatel/ecommerce-frontend/blob/master/screen-shot/home.png)
+ 
+ * Searching Product based on product tag
+  ![Image of screenshot](https://github.com/talhapatel/ecommerce-frontend/blob/master/screen-shot/searching.png)
+  * home page
+  ![Image of screenshot](https://github.com/talhapatel/ecommerce-frontend/blob/master/screen-shot/unregisteruser.png)
+  
+ 
 #### Web services project can be found in (https://github.com/talhapatel/Eommerce-spring-boot)
 
 ---------
