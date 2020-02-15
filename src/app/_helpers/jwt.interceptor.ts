@@ -18,7 +18,7 @@ export class JwtInterceptor implements HttpInterceptor {
     var reqUrl = request.url;
     let url = environment.API_ENDPOINT + reqUrl
     this.totalRequests++;
-    this.loading.show();
+    this.loading.show();  // here i call loading service to active so we can see loading when call api  // set 'true' value
     //   this.loading.isLoading.next(true);
     //   const currentUser = this.authenticationService.currentUserValue;
     const token = localStorage.getItem("token");
@@ -79,7 +79,7 @@ export class JwtInterceptor implements HttpInterceptor {
   private decreaseRequests() {
     this.totalRequests--;
     if (this.totalRequests === 0) {
-      this.loading.hide()
+  this.loading.hide()  // after geting all request responce we call hide method of loading so its hide loading   // set 'false'
     }
   }
 }

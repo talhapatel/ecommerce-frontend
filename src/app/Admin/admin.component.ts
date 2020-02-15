@@ -20,7 +20,7 @@ this.col=[{field:'name',header:'Name'},
 {field:'mobile',header:'Mobile'}]
 this.user=this.api.currentUser();
 this.loggedType=this.user.user.roles[0].name;
-this.navService.setLoginType(this.loggedType);
+this.navService.setLoginType(this.loggedType);  /// we set login type [admin]/[user]  so with this we change subject behavier and change navbar
 
     this.getUserList()
   }
