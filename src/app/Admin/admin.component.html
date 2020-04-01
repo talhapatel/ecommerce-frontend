@@ -1,4 +1,23 @@
+
+<!-- <ul class="nav nav-tabs">
+  <li [class]="currentTab=='userList'?'active':''" (click)="showTab($event,'userList')"><a>Active User List</a></li>
+  <li [class]="currentTab=='productList'?'active':''" (click)="showTab($event,'productList')"><a>All Product List</a></li>
+  <li class="active"><a>hello</a></li>
+</ul> -->
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+      <a class="nav-link active"   (click)="showTab($event,'userList')">User List
+          <i class="fa fa-home"></i>
+      </a>
+  </li>
+  <li class="nav-item">
+      <a class="nav-link"  (click)="showTab($event,'productList')">Product</a>
+  </li>
+</ul>
 <div class="container">
+  
+
+<div class="userList" *ngIf="currentTab=='userList'">
         <h2>Active User List</h2>
          <table class="table">
           <thead>
@@ -14,36 +33,113 @@
               <td >{{user?.email}}</td>
               <td >{{user?.roles[0]?.name}}</td>
             </tr>
-        <!--     <tr>
-              <td>Default</td>
-              <td>Defaultson</td>
-              <td>def@somemail.com</td>
-            </tr>   -->    
-      <!--       <tr class="success">
-              <td>Success</td>
-              <td>Doe</td>
-              <td>john@example.com</td>
-            </tr> -->
-       <!--      <tr class="danger">
-              <td>Danger</td>
-              <td>Moe</td>
-              <td>mary@example.com</td>
-            </tr> -->
-     <!--        <tr class="info">
-              <td>Info</td>
-              <td>Dooley</td>
-              <td>july@example.com</td>
-            </tr>
-            <tr class="warning">
-              <td>Warning</td>
-              <td>Refs</td>
-              <td>bo@example.com</td>
-            </tr>
-            <tr class="active">
-              <td>Active</td>
-              <td>Activeson</td>
-              <td>act@example.com</td>
-            </tr> -->
           </tbody>
         </table>
       </div>
+      <div class="productList" *ngIf="currentTab=='productList'">
+        <table class="table table-hover table-responsive w-100 d-block d-md-table">
+          <thead>
+              <tr>
+                 
+                  <th>Product Name</th>
+                  <th>Price</th>
+                  <th>Description</th>
+                  <th>Qty</th>
+                  <th>Image</th>
+                  <th>Edit</th>
+                  <th>Delete</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let product of productList">
+                  
+                  <td >{{product.productname}}</td>
+                  <td >₹{{product.price}}</td>
+                  <td >{{product.description}}</td>
+                  <td>{{product.qty}}</td>
+                  <td> <img class="small-image" [src]="product.imagePath | safe" alt="Denim Jeans" style="width:60px; height: 40px; margin-top: 5px" (click)="imagePreview(product.imagePath)"></td>
+                  <td><button type="button"  class="btn btn-warning btn-sm" (click)="updateProduct(product)"><span class="fa fa-pencil fa-fw">Edit</span></button></td>
+                  <td><button type="button"  class="btn btn-danger btn-sm" (click)="deleteProduct(product)"><span class="glyphicon glyphicon-trash">Delete</span></button></td>
+              </tr>
+          </tbody>
+      </table>
+
+
+     
+      </div>
+
+      <p-dialog header="Update Product" [(visible)]="displayProduct">
+        <div class="container py-lg-5 py-md-4 py-sm-4 py-3">
+          <h3 class="title text-center mb-4">Update product</h3> <br>
+  <form class="form-horizontal"  novalidate [formGroup]="productForm" (ngSubmit)="onSubmit(productForm.value)">
+  <div class="row">
+  <div class="col-4">
+    <div class="form-group">
+      <input class="col-sm-10 col-form-label" formControlName="productname" type="text" placeholder="Product Name">
+    </div> 
+    <div class="alert alert-danger" *ngIf="productForm.get('productname').hasError('required') && productForm.get('productname').touched && productForm.get('productname').value ==''" >
+     Product Name is required.
+   </div>
+    <div class="form-group">
+      <textarea class="col-sm-10 col-form-label" formControlName="description" rows="4" placeholder="Product Description"></textarea>
+    </div>  
+    <div class="alert alert-danger" *ngIf="productForm.get('description').hasError('required') && productForm.get('description').touched && productForm.get('description').value ==''" >
+      Product Description is required.
+   </div>
+   <div class="form-group">
+    <input class="col-sm-10 col-form-label" formControlName="qty" type="text" placeholder="Product Quantity">
+  </div> 
+  <div class="alert alert-danger" *ngIf="productForm.get('qty').hasError('required') && productForm.get('qty').touched && productForm.get('qty').value ==''" >
+   Product Quantity is required.
+ </div>
+ <div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text">₹</span>
+  </div>
+  <input type="text" class="col-sm-8 col-form-label" formControlName="price" type="number" placeholder="Product Price">
+  <div class="input-group-append">
+    <span class="input-group-text">.00</span>
+  </div>
+</div>
+ <div class="form-group">
+  <p-chips formControlName="tags"></p-chips>
+</div>  
+<div class="alert alert-danger" *ngIf="productForm.get('price').hasError('required') && productForm.get('price').touched && productForm.get('price').value ==''" >
+ Product Price is required.
+</div>
+   <div class="form-group">
+          <label for="uploadProductImg">Please select Image</label>
+          <input type="file" class="form-control-file" id="uploadProductImg"  accept="image/*" #image (change)="handleFileInput($event.target.files)">
+        </div>
+        <div *ngIf="currentFileUpload" class="progress">
+          <div class="progress-bar progress-bar-info progress-bar-striped"
+            role="progressbar" attr.aria-valuenow="{{progress?.percentage}}"
+            aria-valuemin="0" aria-valuemax="100"
+            [ngStyle]="{width:progress?.percentage+'%'}">
+            {{progress?.percentage}}%</div>
+        </div>
+  </div>
+  <div class="col-4" style="text-align: center;">
+    <h6 class="text-center">Old Product Image</h6><br>
+    <div class="form-group">
+          <img [src]="imageUrlOld | safe" class="img-thumbnail" alt="Responsive image" style="width:300px;height: 300px;">
+        </div>
+      
+      </div>
+      <div class="col-4" style="text-align: center;">
+        <h6 class="text-center">New Product Image</h6><br>
+        <div class="form-group">
+              <img [src]="imageUrl" class="img-thumbnail" alt="Responsive image" style="width:300px;height: 300px;">
+            </div>
+          
+          </div>
+      </div>
+    <button class="btn btn-primary" type="submit" [disabled] ="!productForm.valid" >Add</button>
+    </form>
+    </div>
+    </p-dialog>
+  <p-dialog header="Image Preview"  dismissableMask=true  [(visible)]="displayPreview">
+   
+    <iframe [src]="imagePreviewURL | safe" allowfullscreen style="width: 1000px" height="600px"></iframe>
+  </p-dialog>
+</div>

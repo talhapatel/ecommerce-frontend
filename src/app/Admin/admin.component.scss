@@ -1,0 +1,13 @@
+.modal-header{
+    background-color:#333;
+    color:#fff;
+}
+.modal fade{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);  
+}
+.small-image:hover{
+cursor: zoom-in !important;
+}

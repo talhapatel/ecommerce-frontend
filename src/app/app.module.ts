@@ -28,6 +28,10 @@ import {ChipsModule} from 'primeng/chips';
 
 
 
+
+
+
+
 import { ProductComponent } from './home/product/product.component';
 import { CartItemComponent } from './home/cart-item/cart-item.component';
 import { AddressComponent } from './home/address/address.component';
@@ -65,7 +69,9 @@ import { AppPasswordDirective } from './app-password.directive';
     AccordionModule,
     ToastModule,
     ConfirmDialogModule,
-    ChipsModule
+    ChipsModule,
+    DialogModule
+    
   
     
     

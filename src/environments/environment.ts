@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
 
-  API_ENDPOINT: 'http://localhost:8080/api/'
+  API_ENDPOINT: 'http://localhost:8080/api/',
+  IMG_PATH:'http://localhost:8080/api/files/'
 };
 
 /*

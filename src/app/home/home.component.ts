@@ -5,6 +5,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 import { isNullOrUndefined } from 'util';
 import { Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -45,15 +46,15 @@ getProduct(){
     this.products=p.data.data
 
     this.products.map(m=>{
-    this.api.getImageByUniqueId(m.uniqueId).subscribe(s=>{
+    //this.api.getImageByUniqueId(m.uniqueId).subscribe(s=>{
     //  console.log(s);
     //  let sanitizedUrl = this.domSanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(s));
      // console.log(sanitizedUrl.changingThisBreaksApplicationSecurity,"sanitizeurl")
    
-      m.imagePath= window.URL.createObjectURL(s)
+      m.imagePath= environment.IMG_PATH+m.uniqueId
+   // })
     })
-    })
-
+this.getProduct();
     console.log("products",this.products);
   })
 }
